@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pet_adoption.dao.ReplyDAO">
+
+    <select id="findAll" resultType="com.pet_adoption.entity.Reply">
+        select *
+        from pet_adoption.reply
+    </select>
+    <select id="findByReplyId" resultType="com.pet_adoption.entity.Reply">
+        select *
+        from pet_adoption.reply
+        where id = #{id}
+    </select>
+    <select id="findByReplyUserName" resultType="com.pet_adoption.entity.Reply">
+        select r.*, u.userName
+        from pet_adoption.reply as r
+                 join pet_adoption.user as u on r.userId = u.id
+        where u.userName like concat('%', #{userName}, '%')
+    </select>
+    <insert id="insert" parameterType="com.pet_adoption.entity.Reply" useGeneratedKeys="true" keyProperty="id">
+        insert into pet_adoption.reply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">userId</if>
+            <if test="replyId != null">replyId</if>
+            <if test="commentId != null">commentId</if>
+            <if test="replyTime != null">replyTime</if>
+            <if test="content != null and content != ''">content</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId}</if>
+            <if test="replyId != null">#{replyId}</if>
+            <if test="commentId != null">#{commentId}</if>
+            <if test="replyTime != null">#{replyTime}</if>
+            <if test="content != null and content != ''">#{content}</if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.pet_adoption.entity.Reply">
+        update pet_adoption.reply
+        <set>
+            <if test="userId!=null">
+                userId=#{userId},
+            </if>
+            <if test="replyId!=null">
+                replyId=#{replyId},
+            </if>
+            <if test="commentId!=null">
+                commentId=#{commentId},
+            </if>
+            <if test="replyTime!=null">
+                replyTime=#{replyTime},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete
+        from pet_adoption.reply
+        where id = #{id}
+    </delete>
+</mapper>

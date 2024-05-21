@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "http://jakarta.apache.org/log4j/log4j.dtd">
+<log4j:configuration>
+
+    <!-- 控制台Appender -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- 自定义category -->
+    <!--name属性用于为category元素指定一个名称。category元素用于定义XML文档中的一个分类或类别-->
+    <category name="com.pet_adoption">
+        <!--日志输出级别-->
+<!--        在日志输出级别中，常见的级别包括DEBUG、INFO、WARNING、ERROR、CRITICAL、ALERT和EMERGENCY等，它们的排序通常如下：
+        DEBUG：调试信息，通常是一些非常详细的信息，用于帮助开发人员定位问题。
+        INFO：信息，用于记录一些重要的信息，例如应用程序的启动和关闭等。
+        WARNING：警告，用于记录一些可能的问题或异常情况。
+        ERROR：错误，用于记录一些错误信息，帮助开发人员定位问题。
+        CRITICAL：严重错误，用于记录一些可能导致应用程序无法正常运行的错误信息。
+        ALERT：警报，用于记录一些需要立即处理的错误信息。
+        EMERGENCY：紧急错误，用于记录一些可能导致系统崩溃的错误信息。
+        这些级别的排序通常按照日志的重要性和紧急性从低到高排序。在使用日志输出级别时，可以根据具体情况选择合适的级别来记录日志信息-->
+        <priority value="debug"/>
+    </category>
+
+    <!-- 根Logger -->
+    <root>
+        <priority value="info"/>
+        <appender-ref ref="console"/>
+    </root>
+
+</log4j:configuration>
