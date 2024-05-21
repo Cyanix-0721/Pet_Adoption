@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--让蛇形数据库命名直接转换成java的驼峰命名法-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <!--分页-->
+    <!--官方文档：https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/zh/HowToUse.md-->
+    <!--
+    plugins在配置文件中的位置必须符合要求，否则会报错，顺序如下:
+    properties?, settings?,
+    typeAliases?, typeHandlers?,
+    objectFactory?,objectWrapperFactory?,
+    plugins?,
+    environments?, databaseIdProvider?, mappers?
+-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--设定方言为mysql-->
+            <property name="helperDialect" value="mysql"/>
+            <!--pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页-->
+            <property name="reasonable" value="true"/>
+            <!--该参数设置为 true 时，如果 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果（相当于没有执行分页查询，但是返回结果仍然是 Page 类型）-->
+            <property name="pageSizeZero" value="true"/>
+        </plugin>
+    </plugins>
+    <mappers><!-- 映射器告诉MyBatis到哪里去找映射文件 -->
+        <mapper resource="mapper/AdminMapper.xml"/>
+        <mapper resource="mapper/ApplyMapper.xml"/>
+        <mapper resource="mapper/BlogMapper.xml"/>
+        <mapper resource="mapper/PetMapper.xml"/>
+        <mapper resource="mapper/ReplyMapper.xml"/>
+        <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/AdoptioMapper.xml"/>
+        <mapper resource="mapper/CommentsMapper.xml"/>
+    </mappers>
+</configuration>

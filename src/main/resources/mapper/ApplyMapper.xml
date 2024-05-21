@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pet_adoption.dao.ApplyDAO">
+    <select id="findAll" resultType="com.pet_adoption.entity.Apply">
+        select *
+        from pet_adoption.apply
+    </select>
+    <select id="findByApplyId" resultType="com.pet_adoption.entity.Apply">
+        select *
+        from pet_adoption.apply
+        where id = #{id}
+    </select>
+    <select id="findByApplyName" resultType="com.pet_adoption.entity.Apply">
+        select *
+        from pet_adoption.apply
+        where name like concat('%', #{name}, '%')
+    </select>
+    <select id="findByApplyTime" resultType="com.pet_adoption.entity.Apply">
+        select applyTime
+        from pet_adoption.apply
+        where applyTime = #{applyTime}
+    </select>
+    <select id="findByApplyState" resultType="com.pet_adoption.entity.Apply">
+        select state
+        from pet_adoption.apply
+        where state = #{state}
+    </select>
+    
+    <insert id="insert" parameterType="com.pet_adoption.entity.Apply" useGeneratedKeys="true" keyProperty="id">
+        insert into pet_adoption.apply (name, email, age, telephone, message, applyTime, state)
+        values (#{name}, #{email}, #{age}, #{telephone}, #{message}, #{applyTime}, #{state})
+    </insert>
+
+    <update id="update" parameterType="com.pet_adoption.entity.Apply">
+        update pet_adoption.apply
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="answerTime!=null">
+                telephone=#{telephone},
+            </if>
+            <if test="message!=null">
+                message=#{message},
+            </if>
+            <if test="applyTime!=null">
+                applyTime=#{applyTime},
+            </if>
+            <if test="state!=null">
+                state=#{state},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete
+        from pet_adoption.apply
+        where id = #{id}
+    </delete>
+</mapper>

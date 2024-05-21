@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pet_adoption.dao.CommentsDAO">
+
+    <select id="findAll" resultType="com.pet_adoption.entity.Comments">
+        select *
+        from pet_adoption.comments
+    </select>
+    <select id="findByCommentsId" resultType="com.pet_adoption.entity.Comments">
+        select c.*, u.userName
+        from pet_adoption.comments as c
+                 join pet_adoption.user as u on c.userId = u.id
+        where u.userName like concat('%', #{userName}, '%')
+    </select>
+    <select id="findByCommentsUserName" resultType="com.pet_adoption.entity.Comments">
+        select *
+        from pet_adoption.comments
+        where userId = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="com.pet_adoption.entity.Comments" useGeneratedKeys="true" keyProperty="id">
+        insert into pet_adoption.comments
+            (userId, adminId, petId, commentTime, content)
+        values (#{userId}, #{adminId}, #{petId}, #{commentTime}, #{content})
+    </insert>
+
+    <update id="update" parameterType="com.pet_adoption.entity.Comments">
+        update pet_adoption.comments
+        <set>
+            <if test="userId!=null">
+                userId=#{userId},
+            </if>
+            <if test="Id!=null">
+                adminId=#{adminId},
+            </if>
+            <if test="petId!=null">
+                petId=#{petId},
+            </if>
+            <if test="commentTime!=null">
+                commentTime=#{commentTime},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    
+    <delete id="delete">
+        delete
+        from pet_adoption.comments
+        where id = #{id}
+    </delete>
+</mapper>

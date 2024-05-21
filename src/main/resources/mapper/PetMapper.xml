@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pet_adoption.dao.PetDAO">
+
+    <select id="findAll" resultType="com.pet_adoption.entity.Pet">
+        select *
+        from pet_adoption.pet
+    </select>
+    <select id="findByPetId" resultType="com.pet_adoption.entity.Pet">
+        select *
+        from pet_adoption.pet
+        where id = #{id}
+    </select>
+    <select id="findByPetName" resultType="com.pet_adoption.entity.Pet">
+        select *
+        from pet_adoption.pet
+        where petName like concat('%', #{petName}, '%')
+    </select>
+    <select id="findByPetType" resultType="com.pet_adoption.entity.Pet">
+        select *
+        from pet_adoption.pet
+        where petType like concat('%', #{petType}, '%')
+    </select>
+    <insert id="insert" parameterType="com.pet_adoption.entity.Pet" useGeneratedKeys="true" keyProperty="id">
+        insert into pet_adoption.pet
+            (petName, petType, birthday, sex, pic, state, remark)
+        values
+            (#{petName}, #{petType}, #{birthday}, #{sex}, #{pic}, #{state}, #{remark})
+    </insert>
+
+    <update id="update" parameterType="com.pet_adoption.entity.Pet">
+        update pet_adoption.pet
+        <set>
+            <if test="petName!=null">
+                petName=#{petName},
+            </if>
+            <if test="petType!=null">
+                petType=#{petType},
+            </if>
+            <if test="birthday!=null">
+                birthday=#{birthday},
+            </if>
+            <if test="sex!=null">
+                sex=#{sex},
+            </if>
+            <if test="pic!=null">
+                pic=#{pic},
+            </if>
+            <if test="state!=null">
+                state=#{state},
+            </if>
+            <if test="remark!=null">
+                remark=#{remark},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete
+        from pet_adoption.pet
+        where id = #{id}
+    </delete>
+</mapper>

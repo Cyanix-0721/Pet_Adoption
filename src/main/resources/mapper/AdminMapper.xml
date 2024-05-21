@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pet_adoption.dao.AdminDAO">
+    <select id="login" resultType="com.pet_adoption.entity.Admin">
+        select *
+        from admin
+        <where>
+            <if test="adminName != null and adminName != ''">
+                adminName=#{adminName}
+                <if test="adminPwd != null and adminPwd != ''">
+                    AND adminPwd=#{adminPwd}
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="findAll" resultType="com.pet_adoption.entity.Admin">
+        select *
+        from admin
+    </select>
+    <select id="findByAdminId" resultType="com.pet_adoption.entity.Admin">
+        select *
+        from admin
+        where id = #{id}
+    </select>
+    <select id="findByAdminName" resultType="com.pet_adoption.entity.Admin">
+        select *
+        from admin
+        where adminName like concat('%', #{adminName}, '%')
+    </select>
+    <insert id="insert" parameterType="com.pet_adoption.entity.Admin" useGeneratedKeys="true" keyProperty="id">
+        insert into admin (adminName,
+                           adminPwd,
+                           realName,
+                           telephone,
+                           email,
+                           age,
+                           sex,
+                           pic,
+                           remark)
+        values (#{adminName},
+                #{adminPwd},
+                #{realName},
+                #{telephone},
+                #{email},
+                #{age},
+                #{sex},
+                #{pic},
+                #{remark})
+    </insert>
+    
+    <update id="update" parameterType="com.pet_adoption.entity.Admin">
+        update admin
+        set adminName=#{adminName},
+            adminPwd=#{adminPwd},
+            realName=#{realName},
+            telephone=#{telephone},
+            email=#{email},
+            age=#{age},
+            sex=#{sex},
+            pic=#{pic},
+            remark=#{remark}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete
+        from admin
+        where id = #{id}
+    </delete>
+</mapper>
